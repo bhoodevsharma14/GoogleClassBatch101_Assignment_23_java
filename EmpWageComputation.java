@@ -1,28 +1,32 @@
 public class EmpWageComputation
 {
-	static final int HALFDAY=1,FULLDAY=2,WAGEPERHR=20;
+	static final int HALFDAY=1,FULLDAY=2,WAGEPERHR=20,MONTH=20;
 	public static void main(String[] args)
 	{
-		int random=(int)Math.floor(Math.random()*10)%3;
-		int workingHrs=0,salary;
 
-		switch(random)
+		int workingHrs=0,salary,totalSalary=0;
+		for(int day=1;day<=MONTH;day++)
 		{
-			case HALFDAY:
-							System.out.println("Employee Is Present For Halfday");
-							workingHrs=4;
-							break;
-			case FULLDAY:
-							System.out.println("Employee Is Present For Fullday");
-							workingHrs=8;
-							break;
-			default:
-							System.out.println("Employee Is Absent ");
+			int random=(int)Math.floor(Math.random()*10)%3;
+
+			switch(random)
+			{
+				case HALFDAY:
+								workingHrs=4;
+								break;
+				case FULLDAY:
+								workingHrs=8;
+								break;
+				default:
+								workingHrs=0;
+			}
+
+			salary=WAGEPERHR*workingHrs;
+			totalSalary+=salary;
 		}
 
-		salary=WAGEPERHR*workingHrs;
 
-		System.out.println("Employee Earns "+salary);
+		System.out.println("Employee Earns "+totalSalary+" This Month");
 
 	}
 }
