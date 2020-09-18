@@ -1,6 +1,7 @@
+import java.util.Scanner;
 public class EmpWageComputation
 {
-	static final int HALFDAY=1,FULLDAY=2,WAGEPERHR=20,MONTH=20,MAXWORKINGHRS=100;
+	static final int HALFDAY=1,FULLDAY=2;
 
 	static int present()
 	{
@@ -13,20 +14,20 @@ public class EmpWageComputation
 		switch(attdn)
 		{
 				case HALFDAY:
-								workingHrs=4;
-								break;
+					workingHrs=4;
+					break;
 				case FULLDAY:
-								workingHrs=8;
-								break;
+					workingHrs=8;
+					break;
 				default:
-								workingHrs=0;
+					workingHrs=0;
 		}
 
 		return workingHrs;
 
 	}
 
-	public static void CalculateWage()
+	public static void CalculateWage(String Company,int WAGEPERHR,int MONTH,int MAXWORKINGHRS)
 	{
 		int workingHrs=0,salary,totalSalary=0,totalWorkingHrs=0,day;
 		for(day=1;day<=MONTH && totalWorkingHrs<=MAXWORKINGHRS;day++)
@@ -48,13 +49,31 @@ public class EmpWageComputation
 			totalSalary+=salary;
 		}
 
-		System.out.println("Employee Earns "+totalSalary+" This Month");
+		System.out.println(Company+"\t Company Employee Earns "+totalSalary+" This Month\n");
 
+	}
+
+	public EmpWageComputation(int numberOfCompany)
+	{
+		for(int i=1;i<=numberOfCompany;i++)
+			{	Scanner sc1=new Scanner(System.in);
+				System.out.println("\nEnter Name of Company : ");
+				String companyName=sc1.nextLine();
+				System.out.println("Enter Wage Per Hours : ");
+				int wagePerHr=sc1.nextInt();
+				System.out.println("Number of Working Days : ");
+				int month=sc1.nextInt();
+				System.out.println("Maximun Nuber of working Hours : ");
+				int maxworkinghrs=sc1.nextInt();
+				CalculateWage(companyName,wagePerHr,month,maxworkinghrs);
+			}
 	}
 
 	public static void main(String[] args)
 	{
-
-		CalculateWage();
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter Number of Companies");
+		int numberOfCompany=	sc.nextInt();
+		EmpWageComputation obj=new EmpWageComputation(numberOfCompany);
 	}
 }
