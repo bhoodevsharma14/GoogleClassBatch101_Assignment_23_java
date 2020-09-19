@@ -1,13 +1,18 @@
+import java.util.ArrayList;
 import java.util.Scanner;
+
 public class EmpWageComputation
 {
 	static final int HALFDAY=1,FULLDAY=2;
+	public static EmpWageBuilder[] build=new EmpWageBuilder[2];
+	public static int COMPANY_COUNT=0;
 
 	static int present()
 	{
 		int random=(int)Math.floor(Math.random()*10)%3;
 		return random;
 	}
+
 	static int getWorkingHrs(int attdn)
 	{
 		int workingHrs;
@@ -24,7 +29,6 @@ public class EmpWageComputation
 		}
 
 		return workingHrs;
-
 	}
 
 	public static void CalculateWage(String Company,int WAGEPERHR,int MONTH,int MAXWORKINGHRS)
@@ -48,32 +52,37 @@ public class EmpWageComputation
 			salary=WAGEPERHR*workingHrs;
 			totalSalary+=salary;
 		}
+		build[COMPANY_COUNT]=new EmpWageBuilder(Company,totalSalary);
+		COMPANY_COUNT++;
 
-		System.out.println(Company+"\t Company Employee Earns "+totalSalary+" This Month\n");
 
 	}
-
-	public EmpWageComputation(int numberOfCompany)
-	{
-		for(int i=1;i<=numberOfCompany;i++)
-			{	Scanner sc1=new Scanner(System.in);
-				System.out.println("\nEnter Name of Company : ");
-				String companyName=sc1.nextLine();
-				System.out.println("Enter Wage Per Hours : ");
-				int wagePerHr=sc1.nextInt();
-				System.out.println("Number of Working Days : ");
-				int month=sc1.nextInt();
-				System.out.println("Maximun Nuber of working Hours : ");
-				int maxworkinghrs=sc1.nextInt();
-				CalculateWage(companyName,wagePerHr,month,maxworkinghrs);
-			}
-	}
-
 	public static void main(String[] args)
 	{
-		Scanner sc=new Scanner(System.in);
-		System.out.println("Enter Number of Companies");
-		int numberOfCompany=	sc.nextInt();
-		EmpWageComputation obj=new EmpWageComputation(numberOfCompany);
+		EmpWageComputation obj=new EmpWageComputation();
+		obj.CalculateWage("Microsoft",20,30,100);
+		obj.CalculateWage("Bhoodev",30,15,120);
+		int len=build.length;
+		for(int i=0;i<len;i++)
+		{
+			build[i].show();
+		}
+	}
+}
+
+class EmpWageBuilder
+{
+	public String COMPANY_NAME;
+	public int TOTAL_WAGE;
+
+	EmpWageBuilder(String company_name,int totalWage)
+	{
+		this.COMPANY_NAME=company_name;
+		this.TOTAL_WAGE=totalWage;
+	}
+
+	public void show()
+	{
+		System.out.println("Company Name : "+COMPANY_NAME+", Total Wage :"+TOTAL_WAGE);
 	}
 }
