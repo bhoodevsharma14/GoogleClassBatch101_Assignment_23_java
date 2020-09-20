@@ -1,3 +1,4 @@
+import java.util.*;
 interface IEmpWageComputation
 {
 	public void addCompanyEmpWage(String Company,int WagePerHr,int Month,int MaxWorkingHrs);
@@ -8,8 +9,7 @@ public class EmpWageComputation implements IEmpWageComputation
 {
 	public static final int HALFDAY=1,FULLDAY=2;
 
-	private static int COMPANY_COUNT=0;
-	private CompanyEmpWage[] CompanyEmpWageArray;
+	ArrayList<CompanyEmpWage>CompanyEmpWageList;
 
 
 	static int present()
@@ -39,11 +39,14 @@ public class EmpWageComputation implements IEmpWageComputation
 	@Override
 	public void CalculateWage()
 	{
-		for(int i=0;i<COMPANY_COUNT;i++)
+		for(CompanyEmpWage list:CompanyEmpWageList)
 		{
-			CompanyEmpWageArray[i].setTotalWage(CalculateWage(CompanyEmpWageArray[i]));
-                        CompanyEmpWageArray[i].show();
+			list.setTotalWage(CalculateWage(list));
+			list.show();
+
 		}
+
+
 	}
 
 	public int CalculateWage(CompanyEmpWage CompanyEmpWage)
@@ -75,14 +78,14 @@ public class EmpWageComputation implements IEmpWageComputation
 
 	public EmpWageComputation()
 	{
-		CompanyEmpWageArray=new CompanyEmpWage[5];
+		CompanyEmpWageList=new ArrayList<>();
+
 	}
 
 	@Override
 	public void addCompanyEmpWage(String Company,int WagePerHr,int Month,int MaxWorkingHrs)
 	{
-		CompanyEmpWageArray[COMPANY_COUNT]=new CompanyEmpWage(Company,WagePerHr,Month,MaxWorkingHrs);
-		COMPANY_COUNT++;
+		CompanyEmpWageList.add(new CompanyEmpWage(Company,WagePerHr,Month,MaxWorkingHrs));
 	}
 
 	public static void main(String[] args)
