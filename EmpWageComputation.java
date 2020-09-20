@@ -10,6 +10,7 @@ public class EmpWageComputation implements IEmpWageComputation
 	public static final int HALFDAY=1,FULLDAY=2;
 
 	ArrayList<CompanyEmpWage>CompanyEmpWageList;
+	ArrayList dailyWageList;
 
 
 	static int present()
@@ -43,6 +44,7 @@ public class EmpWageComputation implements IEmpWageComputation
 		{
 			list.setTotalWage(CalculateWage(list));
 			list.show();
+			System.out.println("The Daily Wage List is :\n"+dailyWageList+"\n");
 
 		}
 
@@ -69,6 +71,7 @@ public class EmpWageComputation implements IEmpWageComputation
 			totalWorkingHrs+=workingHrs;
 			salary=CompanyEmpWage.WAGEPERHR*workingHrs;
 			totalSalary+=salary;
+			dailyWageList.add(salary);
 		}
 
 		return totalSalary;
@@ -79,7 +82,7 @@ public class EmpWageComputation implements IEmpWageComputation
 	public EmpWageComputation()
 	{
 		CompanyEmpWageList=new ArrayList<>();
-
+		dailyWageList=new ArrayList<>();
 	}
 
 	@Override
@@ -98,6 +101,7 @@ public class EmpWageComputation implements IEmpWageComputation
 
 	}
 }
+
 class CompanyEmpWage
 {
 	public final int WAGEPERHR,MONTH,MAXWORKINGHRS;
@@ -123,8 +127,3 @@ class CompanyEmpWage
 	}
 
 }
-
-
-
-
-
