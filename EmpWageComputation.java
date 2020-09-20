@@ -1,14 +1,9 @@
-import java.util.ArrayList;
-import java.util.Scanner;
-
 public class EmpWageComputation
 {
 	public static final int HALFDAY=1,FULLDAY=2;
-	public static int COMPANY_COUNT=0;
-	private final int TOTAL_WAGE,WAGEPERHR,MONTH,MAXWORKINGHRS;
-	public String COMPANY_NAME;
-//	public static EmpWageComputation[] build=new EmpWageComputation[2];
 
+	private static int COMPANY_COUNT=0;
+	private CompanyEmpWage[] CompanyEmpWageArray;
 
 
 	static int present()
@@ -35,10 +30,19 @@ public class EmpWageComputation
 		return workingHrs;
 	}
 
-	public int CalculateWage()
+	public void CalculateWage()
+	{
+		for(int i=0;i<COMPANY_COUNT;i++)
+		{
+			CompanyEmpWageArray[i].setTotalWage(CalculateWage(CompanyEmpWageArray[i]));
+                        CompanyEmpWageArray[i].show();
+		}
+	}
+
+	public int CalculateWage(CompanyEmpWage CompanyEmpWage)
 	{
 		int workingHrs=0,salary,totalSalary=0,totalWorkingHrs=0,day;
-		for(day=1;day<=this.MONTH && totalWorkingHrs<=this.MAXWORKINGHRS;day++)
+		for(day=1;day<=CompanyEmpWage.MONTH && totalWorkingHrs<=CompanyEmpWage.MAXWORKINGHRS;day++)
 		{
 
 			workingHrs=getWorkingHrs(present());
@@ -53,24 +57,53 @@ public class EmpWageComputation
 				break;
 			}
 			totalWorkingHrs+=workingHrs;
-			salary=this.WAGEPERHR*workingHrs;
+			salary=CompanyEmpWage.WAGEPERHR*workingHrs;
 			totalSalary+=salary;
 		}
-		//build[COMPANY_COUNT]=new EmpWageComputation(Company,totalSalary);
-		COMPANY_COUNT++;
+
 		return totalSalary;
 
 
 	}
 
-	public EmpWageComputation(String Company,int WagePerHr,int Month,int MaxWorkingHrs)
+	public EmpWageComputation()
+	{
+		CompanyEmpWageArray=new CompanyEmpWage[5];
+	}
+
+	private void addCompanyEmpWage(String Company,int WagePerHr,int Month,int MaxWorkingHrs)
+	{
+		CompanyEmpWageArray[COMPANY_COUNT]=new CompanyEmpWage(Company,WagePerHr,Month,MaxWorkingHrs);
+		COMPANY_COUNT++;
+	}
+
+	public static void main(String[] args)
+	{
+		EmpWageComputation  obj=new EmpWageComputation();
+		obj.addCompanyEmpWage("Microsoft",20,30,100);
+		obj.addCompanyEmpWage("FlipKart",30,15,120);
+		obj.CalculateWage();
+
+
+	}
+}
+class CompanyEmpWage
+{
+	public final int WAGEPERHR,MONTH,MAXWORKINGHRS;
+	public int TOTAL_WAGE;
+	public String COMPANY_NAME;
+
+	public CompanyEmpWage(String Company,int WagePerHr,int Month,int MaxWorkingHrs)
 	{
 		this.COMPANY_NAME=Company;
 		this.WAGEPERHR=WagePerHr;
 		this.MONTH=Month;
 		this.MAXWORKINGHRS=MaxWorkingHrs;
-		this.TOTAL_WAGE=CalculateWage();;
-		this.show();
+	}
+
+	public void setTotalWage(int totalSalary)
+	{
+		this.TOTAL_WAGE=totalSalary;
 	}
 
 	public void show()
@@ -78,10 +111,9 @@ public class EmpWageComputation
 		System.out.println("Company Name : "+this.COMPANY_NAME+", Total Wage :"+this.TOTAL_WAGE);
 	}
 
-	public static void main(String[] args)
-	{
-		EmpWageComputation Microsoft=new EmpWageComputation("Microsoft",20,30,100);
-		EmpWageComputation FlipKart=new EmpWageComputation("FlipKart",30,15,120);
-	}
 }
+
+
+
+
 
