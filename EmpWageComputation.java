@@ -3,9 +3,13 @@ import java.util.Scanner;
 
 public class EmpWageComputation
 {
-	static final int HALFDAY=1,FULLDAY=2;
-	public static EmpWageBuilder[] build=new EmpWageBuilder[2];
+	public static final int HALFDAY=1,FULLDAY=2;
 	public static int COMPANY_COUNT=0;
+	private final int TOTAL_WAGE,WAGEPERHR,MONTH,MAXWORKINGHRS;
+	public String COMPANY_NAME;
+//	public static EmpWageComputation[] build=new EmpWageComputation[2];
+
+
 
 	static int present()
 	{
@@ -31,10 +35,10 @@ public class EmpWageComputation
 		return workingHrs;
 	}
 
-	public static void CalculateWage(String Company,int WAGEPERHR,int MONTH,int MAXWORKINGHRS)
+	public int CalculateWage()
 	{
 		int workingHrs=0,salary,totalSalary=0,totalWorkingHrs=0,day;
-		for(day=1;day<=MONTH && totalWorkingHrs<=MAXWORKINGHRS;day++)
+		for(day=1;day<=this.MONTH && totalWorkingHrs<=this.MAXWORKINGHRS;day++)
 		{
 
 			workingHrs=getWorkingHrs(present());
@@ -49,40 +53,35 @@ public class EmpWageComputation
 				break;
 			}
 			totalWorkingHrs+=workingHrs;
-			salary=WAGEPERHR*workingHrs;
+			salary=this.WAGEPERHR*workingHrs;
 			totalSalary+=salary;
 		}
-		build[COMPANY_COUNT]=new EmpWageBuilder(Company,totalSalary);
+		//build[COMPANY_COUNT]=new EmpWageComputation(Company,totalSalary);
 		COMPANY_COUNT++;
+		return totalSalary;
 
 
 	}
-	public static void main(String[] args)
-	{
-		EmpWageComputation obj=new EmpWageComputation();
-		obj.CalculateWage("Microsoft",20,30,100);
-		obj.CalculateWage("Bhoodev",30,15,120);
-		int len=build.length;
-		for(int i=0;i<len;i++)
-		{
-			build[i].show();
-		}
-	}
-}
 
-class EmpWageBuilder
-{
-	public String COMPANY_NAME;
-	public int TOTAL_WAGE;
-
-	EmpWageBuilder(String company_name,int totalWage)
+	public EmpWageComputation(String Company,int WagePerHr,int Month,int MaxWorkingHrs)
 	{
-		this.COMPANY_NAME=company_name;
-		this.TOTAL_WAGE=totalWage;
+		this.COMPANY_NAME=Company;
+		this.WAGEPERHR=WagePerHr;
+		this.MONTH=Month;
+		this.MAXWORKINGHRS=MaxWorkingHrs;
+		this.TOTAL_WAGE=CalculateWage();;
+		this.show();
 	}
 
 	public void show()
 	{
-		System.out.println("Company Name : "+COMPANY_NAME+", Total Wage :"+TOTAL_WAGE);
+		System.out.println("Company Name : "+this.COMPANY_NAME+", Total Wage :"+this.TOTAL_WAGE);
+	}
+
+	public static void main(String[] args)
+	{
+		EmpWageComputation Microsoft=new EmpWageComputation("Microsoft",20,30,100);
+		EmpWageComputation FlipKart=new EmpWageComputation("FlipKart",30,15,120);
 	}
 }
+
