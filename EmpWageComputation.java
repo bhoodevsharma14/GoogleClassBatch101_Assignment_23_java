@@ -1,4 +1,10 @@
-public class EmpWageComputation
+interface IEmpWageComputation
+{
+	public void addCompanyEmpWage(String Company,int WagePerHr,int Month,int MaxWorkingHrs);
+	public void CalculateWage();
+}
+
+public class EmpWageComputation implements IEmpWageComputation
 {
 	public static final int HALFDAY=1,FULLDAY=2;
 
@@ -30,6 +36,7 @@ public class EmpWageComputation
 		return workingHrs;
 	}
 
+	@Override
 	public void CalculateWage()
 	{
 		for(int i=0;i<COMPANY_COUNT;i++)
@@ -71,7 +78,8 @@ public class EmpWageComputation
 		CompanyEmpWageArray=new CompanyEmpWage[5];
 	}
 
-	private void addCompanyEmpWage(String Company,int WagePerHr,int Month,int MaxWorkingHrs)
+	@Override
+	public void addCompanyEmpWage(String Company,int WagePerHr,int Month,int MaxWorkingHrs)
 	{
 		CompanyEmpWageArray[COMPANY_COUNT]=new CompanyEmpWage(Company,WagePerHr,Month,MaxWorkingHrs);
 		COMPANY_COUNT++;
